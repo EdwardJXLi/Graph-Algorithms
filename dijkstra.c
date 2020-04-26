@@ -56,7 +56,9 @@ int * dijkstra(int *map, int *cMap, int size, int start){
         checked[from] = true;
         //Go Through Each Node, Checking Connections
         for(int to = 0; to < size; to++){
-            //printf("%d\n", dist[to] > dist[from] + map[from][to]);
+            //For navigating 2d arrays, using `(from*size) + to`
+            //AKA `(rows*size + column)`
+
             //Checking If:
             //The Nodes Are Connected (using cMap)
             //The New Node Pair Are The Smallest Value
