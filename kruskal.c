@@ -9,6 +9,10 @@
 //Define Maximum Sizes
 #define KS_ALT_MAX_SIZE 9
 
+//Decide on weather to compile main (Used as library or used in standalone)
+// !!Comment out if used as library to prevent main redefinition!! 
+#define _DEFMAIN
+
 //The meat of the the algorithm
 //Takes In:
 //map -> 2d matrix of distances between nodes
@@ -19,6 +23,7 @@ int kruskals(int map[KS_ALT_MAX_SIZE][KS_ALT_MAX_SIZE], int cMap[KS_ALT_MAX_SIZE
 }
 
 
+#ifdef _DEFMAIN //Check if main should be compiled
 int main(){
 	/*
 	int map[KS_ALT_MAX_SIZE][KS_ALT_MAX_SIZE] = {
@@ -62,3 +67,4 @@ int main(){
 
 	kruskals(map, cMap, 0);
 }
+#endif //_DEFMAIN

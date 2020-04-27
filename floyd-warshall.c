@@ -9,6 +9,10 @@
 //Define Maximum Sizes
 #define FW_MAX_SIZE 9
 
+//Decide on weather to compile main (Used as library or used in standalone)
+// !!Comment out if used as library to prevent main redefinition!! 
+#define _DEFMAIN
+
 //Debug Printer for printing all values in distance array
 void debugPrint(int distMap[FW_MAX_SIZE][FW_MAX_SIZE]){
     printf("DBG PRINT\n");
@@ -90,6 +94,7 @@ int floydWarshall(int map[FW_MAX_SIZE][FW_MAX_SIZE], int cMap[FW_MAX_SIZE][FW_MA
 }
 
 
+#ifdef _DEFMAIN //Check if main should be compiled
 int main(){
 
     /*
@@ -149,3 +154,4 @@ int main(){
 
 	floydWarshall(map, cMap, 0);
 }
+#endif //_DEFMAIN

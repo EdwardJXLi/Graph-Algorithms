@@ -6,6 +6,10 @@
 #define true 1
 #define false 0
 
+//Decide on weather to compile main (Used as library or used in standalone)
+// !!Comment out if used as library to prevent main redefinition!! 
+#define _DEFMAIN
+
 //Define Maximum Sizes
 #define BF_MAX_SIZE 10
 
@@ -162,11 +166,8 @@ int bellmanFord(int map[BF_MAX_SIZE][BF_MAX_SIZE], int cMap[BF_MAX_SIZE][BF_MAX_
 }
 
 
+#ifdef _DEFMAIN //Check if main should be compiled
 int main(){
-
-    //todo
-    //int vertexes = 13;
-    //int nodes = 10;
 
     //Test Values
 
@@ -197,4 +198,20 @@ int main(){
     };
 
 	bellmanFord(map, cMap, 0);
+
+    //Expected Output:
+    /*
+    Vertex tDistance from Source
+    0 t 0
+    1 t 5
+    2 t -2147483647
+    3 t -2147483647
+    4 t -2147483647
+    5 t 35
+    6 t 40
+    7 t -10
+    8 t -20
+    9 t -2147483647
+    */
 }
+#endif //_DEFMAIN

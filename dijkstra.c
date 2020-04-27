@@ -7,6 +7,10 @@
 #define true 1
 #define false 0
 
+//Decide on weather to compile main (Used as library or used in standalone)
+// !!Comment out if used as library to prevent main redefinition!! 
+#define _DEFMAIN
+
 //Debug Printer for printing all values in distance array
 void debugPrint(int *dist, int size){
     printf("Vertex tDistance from Source\n");
@@ -78,10 +82,13 @@ int * dijkstra(int *map, int *cMap, int size, int start){
 }
 
 
-// Demo Values
 
 
+
+#ifdef _DEFMAIN //Check if main should be compiled
 int main(){
+
+    // Demo Values
     int map[9][9] = {
     {0, 4, 0, 0, 0, 0, 0, 8, 0}, 
     {4, 0, 8, 0, 0, 0, 0, 11, 0}, 
@@ -113,3 +120,4 @@ int main(){
     free(result);
     
 }	
+#endif //_DEFMAIN

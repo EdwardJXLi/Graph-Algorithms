@@ -9,6 +9,10 @@
 //Define Maximum Sizes
 #define PRIM_MAX_SIZE 5
 
+//Decide on weather to compile main (Used as library or used in standalone)
+// !!Comment out if used as library to prevent main redefinition!! 
+#define _DEFMAIN
+
 //The meat of the the algorithm
 //Takes In:
 //map -> 2d matrix of distances between nodes
@@ -68,6 +72,7 @@ int prim(int map[PRIM_MAX_SIZE][PRIM_MAX_SIZE], int cMap[PRIM_MAX_SIZE][PRIM_MAX
 
 
 
+#ifdef _DEFMAIN //Check if main should be compiled
 int main(){
 
 
@@ -111,3 +116,4 @@ int main(){
 
 	prim(map, cMap, 0);
 }
+#endif //_DEFMAIN
