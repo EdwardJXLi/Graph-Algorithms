@@ -118,6 +118,20 @@ int main(){
 
     //Free result
     free(result);
+
+    //Expected Output:
+    /*
+    Vertex tDistance from Source
+    0 t 0
+    1 t 4
+    2 t 12
+    3 t 19
+    4 t 21
+    5 t 11
+    6 t 9
+    7 t 8
+    8 t 14
+    */
     
 }	
 #endif //_DEFMAIN
