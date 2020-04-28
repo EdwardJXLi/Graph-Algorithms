@@ -13,25 +13,25 @@
 
 //Debug Printer for printing all values in distance array
 void debugPrint(int *dist, int size){
-	printf("Vertex tDistance from Source\n");
-	for(int node = 0; node < size; node++){
-		printf("%d t %d\n", node, dist[node]);
-	}
+    printf("Vertex tDistance from Source\n");
+    for(int node = 0; node < size; node++){
+        printf("%d t %d\n", node, dist[node]);
+    }
 }
 
 //Function to get the shortest valid node (Similar To One Used In Dijkstras)
 int shortestNode(int *dist, int *checked, int size){
-	int min = INFINITY;
-	int minIndex;
+    int min = INFINITY;
+    int minIndex;
     //Loop through every node
-	for(int i = 0; i < size; i++){
+    for(int i = 0; i < size; i++){
         //Check if its the new smallest node and it has not already been checked off.
-		if(dist[i] < min && checked[i] == false){
-			min = dist[i];
-			minIndex = i;
-		}
-	}
-	return minIndex;
+        if(dist[i] < min && checked[i] == false){
+            min = dist[i];
+            minIndex = i;
+        }
+    }
+    return minIndex;
 }
 
 //The meat of the the algorithm
@@ -55,9 +55,9 @@ int * bellmanFord(int *map, int *cMap, int size, int start){
     int relaxOrderCacheSet = false; //Flag dictating if relaxOrderCache has been set
 
     //Distance Array -> Contains Values Of Current Smallest Distances
-	int * dist = (int*)malloc(sizeof(int) * size);
+    int * dist = (int*)malloc(sizeof(int) * size);
     //Set all to infinity
-	for(int i = 0; i < size; i++){dist[i] = INFINITY;}
+    for(int i = 0; i < size; i++){dist[i] = INFINITY;}
 
     //Checked Array -> Indicates What Arrays Has Already Been Checked
     int * checked = (int*)malloc(sizeof(int) * size);
@@ -73,7 +73,7 @@ int * bellmanFord(int *map, int *cMap, int size, int start){
         //(Improves Oavg By Removing Useless Loops)
         int changed = false;
         //Initiate Checked Array - Set all values in checked to zero
-	    for(int i = 0; i < size; i++){checked[i] = 0;}
+        for(int i = 0; i < size; i++){checked[i] = 0;}
         //Loop Through All Nodes
         for(int cout = 0; cout < size; cout++){
             int from;
@@ -128,7 +128,7 @@ int * bellmanFord(int *map, int *cMap, int size, int start){
         //(Improves Oavg By Removing Useless Loops)
         int changed = false;
         //Initiate Checked Array - Set all values in checked to zero
-	    for(int i = 0; i < size; i++){checked[i] = 0;}
+        for(int i = 0; i < size; i++){checked[i] = 0;}
         //Loop Through All Nodes
         for(int cout = 0; cout < size; cout++){
             //Order Cache SHOULD be already generated at this point!
@@ -185,7 +185,7 @@ int main(){
 
     //Test Values
 
-	int map[10][10] = {
+    int map[10][10] = {
         {0, 5, 0, 0, 0, 0, 0, 0, 0, 0}, //0
         {0, 0, 20, 0, 0, 30, 60, 0, 0, 0}, //1
         {0, 0, 0, 10, 75, 0, 0, 0, 0, 0}, //2
@@ -198,7 +198,7 @@ int main(){
         {0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, //9
     };
 
-	int cMap[10][10] = {
+    int cMap[10][10] = {
         {0, 1, 0, 0, 0, 0, 0, 0, 0, 0}, //0
         {0, 0, 1, 0, 0, 1, 1, 0, 0, 0}, //1
         {0, 0, 0, 1, 1, 0, 0, 0, 0, 0}, //2
@@ -211,7 +211,7 @@ int main(){
         {0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, //9
     };
 
-	int * result = bellmanFord(&map[0][0], &cMap[0][0], 10, 0);
+    int * result = bellmanFord(&map[0][0], &cMap[0][0], 10, 0);
 
     //Printing Final Values
     debugPrint(result, 10);
