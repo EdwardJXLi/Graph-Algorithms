@@ -35,10 +35,10 @@ int prim(int * map, int * cMap, int size, int start){
         lowestFrom = -1;
         lowestTo = -1;
         currentCost = INFINITY;
-        //Check for all visited nodes
+        //Check for all visited nodes, acting as "from" node
         for(int from = 0; from < size; from++){
             if(visited[from]){
-                //Check connection to all possible nodes
+                //Check connection to all possible nodes, acting as "to" node
                 for(int to = 0; to < size; to++){
                     //For navigating 2d arrays, using `(from*size) + to`
                     //AKA `(rows*size + column)`
