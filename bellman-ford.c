@@ -61,6 +61,7 @@ int * bellmanFord(int *map, int *cMap, int size, int start){
 
     //Checked Array -> Indicates What Arrays Has Already Been Checked
     int * checked = (int*)malloc(sizeof(int) * size);
+    //NOTE: VALUES IN CHECKED ARRAY GETS INITIATED LATER!
 
     //Set the distance of the starting node to 0
     dist[start] = 0;
