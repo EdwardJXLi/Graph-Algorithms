@@ -1,4 +1,4 @@
-//Floyd Warshall Pathfinding Algorithm
+//Floyd Warshall Shortest Path Algorithm
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -29,8 +29,7 @@ void debugPrint(int distMap[FW_MAX_SIZE][FW_MAX_SIZE]){
 //Takes In:
 //map -> 2d matrix of distances between nodes
 //cMap -> 2d matrix of Connectivity Booleans
-//start -> Starting Node
-int floydWarshall(int map[FW_MAX_SIZE][FW_MAX_SIZE], int cMap[FW_MAX_SIZE][FW_MAX_SIZE], int start){
+int floydWarshall(int map[FW_MAX_SIZE][FW_MAX_SIZE], int cMap[FW_MAX_SIZE][FW_MAX_SIZE]){
     //2d Matrix Of All Distances in Map
     int distMap[FW_MAX_SIZE][FW_MAX_SIZE] = {false};
 
@@ -152,7 +151,7 @@ int main(){
     {0, 0, 1, 0, 0, 0, 1, 1, 0}};
 
     //Run Floyd Warshall And Get Result
-    floydWarshall(map, cMap, 0);
+    floydWarshall(map, cMap);
 
     //Expected Output:
     /*
