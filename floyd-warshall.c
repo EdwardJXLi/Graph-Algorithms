@@ -47,7 +47,7 @@ int floydWarshall(int map[FW_MAX_SIZE][FW_MAX_SIZE], int cMap[FW_MAX_SIZE][FW_MA
     /*
      * This is the FUN part of the algorithm
      * It took me around AN HOUR to wrap my head around this, so I'll try the explain this as well as I can
-     * The Formula Loops Through a, b, and c. (Hench Why Its O(n^3))
+     * The Formula Loops Through a, b, and c. (Hence Why Its O(n^3))
      * 
      * For This Formula, I have Chosen:
      * a -> From Destination
@@ -63,9 +63,11 @@ int floydWarshall(int map[FW_MAX_SIZE][FW_MAX_SIZE], int cMap[FW_MAX_SIZE][FW_MA
      * The Computer Loops Through All Possible "From" Nodes
      * The Computer Loops Through All Possible "To" Nodes
      * The Computer Loops Through All Possible "Alternative" Nodes
-     * The Computer Checkes If The Connection From The "From" Node To The "Alternative" Node
-     * Plus The "Alternative" Node To The "To" Node Is Shorter Than 
+     * The Computer Checkes If The Connection From The "From" Node To The "Alternative" Node (continued)
+     * Plus The "Alternative" Node To The "To" Node Is Shorter Than (continued)
      * Connection From The "From" Node To The "To" Node
+     * 
+     * This way the computer all possible deviations from one node to another node.
      * 
      * This is the best explination I have for this algorithm for now!
     */
@@ -88,7 +90,6 @@ int floydWarshall(int map[FW_MAX_SIZE][FW_MAX_SIZE], int cMap[FW_MAX_SIZE][FW_MA
         }
     }
     
-    //memcpy(distMap, map, sizeof(distMap));
     //Printing Final Values
     debugPrint(distMap);
 }
