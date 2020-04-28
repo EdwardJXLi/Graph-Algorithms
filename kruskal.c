@@ -65,6 +65,7 @@ int main(){
         {0, 1, 1, 1, 0}
     };
 
+    //Run Kruskals And Get Result
     kruskals(map, cMap, 0);
 }
 #endif //_DEFMAIN

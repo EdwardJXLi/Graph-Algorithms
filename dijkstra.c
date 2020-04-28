@@ -111,6 +111,7 @@ int main(){
     {1, 1, 0, 0, 0, 0, 1, 0, 1}, 
     {0, 0, 1, 0, 0, 0, 1, 1, 0}};
 
+    //Run Dijkstras And Get Result
     int * result = dijkstra(&map[0][0], &cMap[0][0], 9, 0);
     
     //Printing Final Values

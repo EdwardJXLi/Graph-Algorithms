@@ -211,6 +211,7 @@ int main(){
         {0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, //9
     };
 
+    //Run Bellman Ford And Get Result
     int * result = bellmanFord(&map[0][0], &cMap[0][0], 10, 0);
 
     //Printing Final Values

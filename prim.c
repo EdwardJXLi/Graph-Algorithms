@@ -114,6 +114,7 @@ int main(){
         {1, 1, 0, 0, 1}, 
         {0, 1, 1, 1, 0}};
 
+    //Run Prim And Get Result
     prim(map, cMap, 0);
 }
 #endif //_DEFMAIN
