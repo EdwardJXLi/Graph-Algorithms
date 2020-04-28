@@ -59,7 +59,7 @@ int * bellmanFord(int *map, int *cMap, int size, int start){
     //Set all to infinity
     for(int i = 0; i < size; i++){dist[i] = INFINITY;}
 
-    //Checked Array -> Indicates What Arrays Has Already Been Checked
+    //Checked Array -> Indicates What Nodes Have Already Been Checked
     int * checked = (int*)malloc(sizeof(int) * size);
     //NOTE: VALUES IN CHECKED ARRAY GETS INITIATED LATER!
 
@@ -137,8 +137,8 @@ int * bellmanFord(int *map, int *cMap, int size, int start){
             checked[from] = true;
             //Go Through Each Node, Checking Connections
             for(int to = 0; to < size; to++){
-                //For navigating 2d arrays, using `(from*size) + to`
-                //AKA `(rows*size + column)`
+                //For navigating 2d arrays, using "(from*size) + to"
+                //AKA "(rows*size + column)"
 
                 
                 //Checking If:
@@ -173,10 +173,11 @@ int * bellmanFord(int *map, int *cMap, int size, int start){
         }
     }
 
-    //Free Malloced Memory
+    //Free Allocated Memory (relaxOrderCache and checked array)
     free(relaxOrderCache);
     free(checked);
 
+    //Return Distance Array Pointer
     return dist;
 }
 

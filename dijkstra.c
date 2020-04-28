@@ -46,7 +46,7 @@ int * dijkstra(int *map, int *cMap, int size, int start){
     //Set all to infinity
     for(int i = 0; i < size; i++){dist[i] = INFINITY;}
 
-    //Checked Array -> Indicates What Arrays Has Already Been Checked
+    //Checked Array -> Indicates What Nodes Have Already Been Checked
     //Using calloc to pre-generate with all zeros
     int * checked = (int*)calloc(size, sizeof(int));
 
@@ -74,9 +74,10 @@ int * dijkstra(int *map, int *cMap, int size, int start){
         }
     }
 
-    //Free Malloced Memory
+    //Free Allocated Memory (Checked Array)
     free(checked);
 
+    //Return Distance Array Pointer
     return dist;
 
 }

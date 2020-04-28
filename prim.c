@@ -22,7 +22,8 @@ int prim(int * map, int * cMap, int size, int start){
     int cost = 0;
     int lowestFrom, lowestTo, currentCost;
 
-    //Visited Array -> Indicates What Arrays Has Already Been Visited (Prevent Self-Looping)
+    //Visited Array -> Indicates What Nodes Have Already Been Visited (Prevent Self-Looping)
+    //Using calloc to pre-generate with all zeros
     int * visited = (int*)calloc(size, sizeof(int));
     visited[start] = true;
 
@@ -40,8 +41,8 @@ int prim(int * map, int * cMap, int size, int start){
             if(visited[from]){
                 //Check connection to all possible nodes, acting as "to" node
                 for(int to = 0; to < size; to++){
-                    //For navigating 2d arrays, using `(from*size) + to`
-                    //AKA `(rows*size + column)`
+                    //For navigating 2d arrays, using "(from*size) + to"
+                    //AKA "(rows*size + column)"
 
                     
                     //Checking If:
@@ -72,7 +73,7 @@ int prim(int * map, int * cMap, int size, int start){
         }
     }
     
-    //Free Malloced Memory
+    //Free Allocated Memory (Visited Array)
     free(visited);
 
     //Return Cost

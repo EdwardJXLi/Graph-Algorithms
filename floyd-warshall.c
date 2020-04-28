@@ -7,19 +7,16 @@
 #define true 1
 #define false 0
 
-//Define Maximum Sizes
-#define FW_MAX_SIZE 9
-
 //Decide on weather to compile main (Used as library or used in standalone)
 // !!Comment out if used as library to prevent main redefinition!! 
 #define _DEFMAIN
 
 //Debug Printer for printing all values in distance array
-void debugPrint(int distMap[FW_MAX_SIZE][FW_MAX_SIZE]){
+void debugPrint(int *distMap, int size){
     printf("DBG PRINT\n");
-    for(int x = 0; x < FW_MAX_SIZE; x++){
-        for(int y = 0; y < FW_MAX_SIZE; y++){
-            printf("%d ", distMap[x][y]);
+    for(int x = 0; x < size; x++){
+        for(int y = 0; y < size; y++){
+            printf("%d ", distMap[(y*size) + x]);
         }
         printf("\n");
     }
@@ -29,18 +26,25 @@ void debugPrint(int distMap[FW_MAX_SIZE][FW_MAX_SIZE]){
 //Takes In:
 //map -> 2d matrix of distances between nodes
 //cMap -> 2d matrix of Connectivity Booleans
-int floydWarshall(int map[FW_MAX_SIZE][FW_MAX_SIZE], int cMap[FW_MAX_SIZE][FW_MAX_SIZE]){
+//size -> Size of 2d matrixs (Number of nodes)
+int * floydWarshall(int *map, int *cMap, int size){
     //2d Matrix Of All Distances in Map
-    int distMap[FW_MAX_SIZE][FW_MAX_SIZE] = {false};
+    //Using calloc to pre-generate with all zeros
+    int * distMap = (int*)calloc(size*size, sizeof(int)); //Using size*size because 2d array
+
+    //For navigating all 2d arrays, using "(from*size) + to"
+    //AKA "(a*size + c)"
+
+                
 
     //Go Through All Values Of Map, Setting Distance Values Either Self Values Or Infinity
-    for(int i = 0; i < FW_MAX_SIZE; i++){
-        for(int j = 0; j < FW_MAX_SIZE; j++){
-            if(cMap[i][j]){
-                distMap[i][j] = map[i][j];  
+    for(int i = 0; i < size; i++){
+        for(int j = 0; j < size; j++){
+            if(cMap[(i*size) + j]){
+                distMap[(i*size) + j] = map[(i*size) + j];  
             }
             else{
-                distMap[i][j] = INFINITY;
+                distMap[(i*size) + j] = INFINITY;
             }
         }
     }
@@ -71,12 +75,15 @@ int floydWarshall(int map[FW_MAX_SIZE][FW_MAX_SIZE], int cMap[FW_MAX_SIZE][FW_MA
      * 
      * This is the best explination I have for this algorithm for now!
     */
-    for(int a = 0; a < FW_MAX_SIZE; a++){
-        for(int b = 0; b < FW_MAX_SIZE; b++){
-            for(int c = 0; c < FW_MAX_SIZE; c++){
-                if(distMap[a][b] != INFINITY && distMap[b][c] != INFINITY){
-                    if(distMap[a][c] > distMap[a][b] + distMap[b][c]){
-                        distMap[a][c] = distMap[a][b] + distMap[b][c];
+    for(int a = 0; a < size; a++){
+        for(int b = 0; b < size; b++){
+            for(int c = 0; c < size; c++){
+                //if(distMap[a][b] != INFINITY && distMap[b][c] != INFINITY){
+                if(distMap[(a*size) + b] != INFINITY && distMap[(b*size) + c] != INFINITY){
+                    //if(distMap[a][c] > distMap[a][b] + distMap[b][c]){
+                    if(distMap[(a*size) + c] > distMap[(a*size) + b] + distMap[(b*size) + c]){
+                        //distMap[a][c] = distMap[a][b] + distMap[b][c];
+                        distMap[(a*size) + c] = distMap[(a*size) + b] + distMap[(b*size) + c];
                     }
                 }
             }
@@ -84,14 +91,10 @@ int floydWarshall(int map[FW_MAX_SIZE][FW_MAX_SIZE], int cMap[FW_MAX_SIZE][FW_MA
     }
 
     //Checking For Negative Cycles (If the Value Of Self Is Negative)
-    for(int v = 0; v < FW_MAX_SIZE; v++){
-        if(distMap[v][v] < 0){
-            distMap[v][v] = NEG_INFINITY;
-        }
-    }
-    
-    //Printing Final Values
-    debugPrint(distMap);
+    // TODO !!
+
+    //Return distMap 2d array
+    return distMap;
 }
 
 
@@ -100,13 +103,13 @@ int main(){
 
 
     /*
-	int map[FW_MAX_SIZE][FW_MAX_SIZE] = {
+	int map[4][4] = {
         {0, 5, 0, 10}, 
 		{0, 0, 3, 0}, 
 		{0, 0, 0, 1}, 
 		{0, 0, 0, 0} 
 	};
-	int cMap[FW_MAX_SIZE][FW_MAX_SIZE] = {
+	int cMap[4][4] = {
         {1, 1, 0, 1}, 
 		{0, 1, 1, 0}, 
 		{0, 0, 1, 1}, 
@@ -115,13 +118,13 @@ int main(){
     */
 
     /*
-    int map[FW_MAX_SIZE][FW_MAX_SIZE] = {
+    int map[4][4] = {
         {0, 1, 0, 0}, 
         {0, 0, -1, 0}, 
         {0, 0, 0, -1}, 
         {-1, 0, 0, 0}
     }; 
-    int cMap[FW_MAX_SIZE][FW_MAX_SIZE] = {
+    int cMap[4][4] = {
         {1, 1, 0, 0}, 
         {0, 1, 1, 0}, 
         {0, 0, 1, 1}, 
@@ -129,7 +132,7 @@ int main(){
     }; 
     */
 
-    int map[FW_MAX_SIZE][FW_MAX_SIZE] = {
+    int map[9][9] = {
     {0, 4, 0, 0, 0, 0, 0, 8, 0}, 
     {4, 0, 8, 0, 0, 0, 0, 11, 0}, 
     {0, 8, 0, 7, 0, 4, 0, 0, 2}, 
@@ -140,7 +143,7 @@ int main(){
     {8, 11, 0, 0, 0, 0, 1, 0, 7}, 
     {0, 0, 2, 0, 0, 0, 6, 7, 0}};
 
-    int cMap[FW_MAX_SIZE][FW_MAX_SIZE] = {
+    int cMap[9][9] = {
     {0, 1, 0, 0, 0, 0, 0, 1, 0}, 
     {1, 0, 1, 0, 0, 0, 0, 1, 0}, 
     {0, 1, 0, 1, 0, 1, 0, 0, 1}, 
@@ -152,7 +155,13 @@ int main(){
     {0, 0, 1, 0, 0, 0, 1, 1, 0}};
 
     //Run Floyd Warshall And Get Result
-    floydWarshall(map, cMap);
+    int * resultMap = floydWarshall(&map[0][0], &cMap[0][0], 9);
+    
+    //Printing Final Values
+    debugPrint(resultMap, 9);
+
+    //Free resultMap
+    free(resultMap);
 
     //Expected Output:
     /*
