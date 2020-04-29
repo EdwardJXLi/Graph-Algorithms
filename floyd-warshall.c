@@ -14,8 +14,8 @@
 //Debug Printer for printing all values in distance array
 void debugPrint(int *distMap, int size){
     printf("DBG PRINT\n");
-    for(int x = 0; x < size; x++){
-        for(int y = 0; y < size; y++){
+    for(int y = 0; y < size; y++){
+        for(int x = 0; x < size; x++){
             printf("%d ", distMap[(y*size) + x]);
         }
         printf("\n");
@@ -35,11 +35,10 @@ int * floydWarshall(int *map, int *cMap, int size){
     //For navigating all 2d arrays, using "(from*size) + to"
     //AKA "(a*size + c)"
 
-                
 
     //Go Through All Values Of Map, Setting Distance Values Either Self Values Or Infinity
-    for(int i = 0; i < size; i++){
-        for(int j = 0; j < size; j++){
+    for(int j = 0; j < size; j++){
+        for(int i = 0; i < size; i++){
             if(cMap[(i*size) + j]){
                 distMap[(i*size) + j] = map[(i*size) + j];  
             }
@@ -48,6 +47,7 @@ int * floydWarshall(int *map, int *cMap, int size){
             }
         }
     }
+    debugPrint(distMap, size);
     /*
      * This is the FUN part of the algorithm
      * It took me around AN HOUR to wrap my head around this, so I'll try the explain this as well as I can
@@ -75,23 +75,20 @@ int * floydWarshall(int *map, int *cMap, int size){
      * 
      * This is the best explination I have for this algorithm for now!
     */
-    for(int a = 0; a < size; a++){
-        for(int b = 0; b < size; b++){
+    for(int b = 0; b < size; b++){
+        for(int a = 0; a < size; a++){
             for(int c = 0; c < size; c++){
                 //if(distMap[a][b] != INFINITY && distMap[b][c] != INFINITY){
                 if(distMap[(a*size) + b] != INFINITY && distMap[(b*size) + c] != INFINITY){
                     //if(distMap[a][c] > distMap[a][b] + distMap[b][c]){
-                    if(distMap[(a*size) + c] > distMap[(a*size) + b] + distMap[(b*size) + c]){
+                    if(distMap[(a*size) + c] > distMap[(a*size) + b] + distMap[(b*size) + c]){; 
                         //distMap[a][c] = distMap[a][b] + distMap[b][c];
                         distMap[(a*size) + c] = distMap[(a*size) + b] + distMap[(b*size) + c];
                     }
                 }
             }
         }
-    }
-
-    //Checking For Negative Cycles (If the Value Of Self Is Negative)
-    // TODO !!
+    }debugPrint(distMap, size);
 
     //Return distMap 2d array
     return distMap;
@@ -116,6 +113,7 @@ int main(){
 		{0, 0, 0, 1} 
 	};
     */
+    
 
     /*
     int map[4][4] = {
@@ -132,6 +130,7 @@ int main(){
     }; 
     */
 
+   
     int map[9][9] = {
     {0, 4, 0, 0, 0, 0, 0, 8, 0}, 
     {4, 0, 8, 0, 0, 0, 0, 11, 0}, 
@@ -153,12 +152,13 @@ int main(){
     {0, 0, 0, 0, 0, 1, 0, 1, 1}, 
     {1, 1, 0, 0, 0, 0, 1, 0, 1}, 
     {0, 0, 1, 0, 0, 0, 1, 1, 0}};
-
+    
+    
     //Run Floyd Warshall And Get Result
     int * resultMap = floydWarshall(&map[0][0], &cMap[0][0], 9);
     
     //Printing Final Values
-    debugPrint(resultMap, 9);
+    debugPrint(resultMap, 9);   
 
     //Free resultMap
     free(resultMap);
@@ -166,11 +166,11 @@ int main(){
     //Expected Output:
     /*
     DBG PRINT
-    8 4 12 19 26 16 9 8 14
+    8 4 12 19 21 11 9 8 14
     4 8 8 15 22 12 12 11 10
     12 8 4 7 14 4 6 7 2
     19 15 7 14 9 11 13 14 9
-    21 24 14 9 18 10 12 13 18
+    21 22 14 9 18 10 12 13 16
     11 12 4 11 10 4 2 3 6
     9 12 6 13 12 2 2 1 6
     8 11 7 14 13 3 1 2 7
