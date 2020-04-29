@@ -33,7 +33,7 @@ int * floydWarshall(int *map, int *cMap, int size){
     int * distMap = (int*)calloc(size*size, sizeof(int)); //Using size*size because 2d array
 
     //For navigating all 2d arrays, using "(from*size) + to"
-    //AKA "(a*size + c)"
+    //AKA "(i*size + j)"
 
 
     //Go Through All Values Of Map, Setting Distance Values Either Self Values Or Infinity
@@ -51,17 +51,17 @@ int * floydWarshall(int *map, int *cMap, int size){
     /*
      * This is the FUN part of the algorithm
      * It took me around AN HOUR to wrap my head around this, so I'll try the explain this as well as I can
-     * The Formula Loops Through a, b, and c. (Hence Why Its O(n^3))
+     * The Formula Loops Through i, k, and j. (Hence Why Its O(n^3))
      * 
      * For This Formula, I have Chosen:
-     * a -> From Destination
-     * b -> Alternative Node
-     * c -> To Destination
+     * i -> From Destination
+     * k -> Alternative Node / Pivot Node
+     * j -> To Destination
      * 
      * These Variables Result In:
-     * (a to c) -> Original Connection
-     * (a to b) -> Alternative Connection
-     * (b to c) -> Connect Alternative Back To Destination
+     * (i to j) -> Original Connection
+     * (i to k) -> Alternative Connection
+     * (k to j) -> Connect Alternative Back To Destination
      * 
      * To Sum It Up:
      * The Computer Loops Through All Possible "From" Nodes
@@ -75,15 +75,15 @@ int * floydWarshall(int *map, int *cMap, int size){
      * 
      * This is the best explination I have for this algorithm for now!
     */
-    for(int b = 0; b < size; b++){
-        for(int a = 0; a < size; a++){
-            for(int c = 0; c < size; c++){
-                //if(distMap[a][b] != INFINITY && distMap[b][c] != INFINITY){
-                if(distMap[(a*size) + b] != INFINITY && distMap[(b*size) + c] != INFINITY){
-                    //if(distMap[a][c] > distMap[a][b] + distMap[b][c]){
-                    if(distMap[(a*size) + c] > distMap[(a*size) + b] + distMap[(b*size) + c]){; 
-                        //distMap[a][c] = distMap[a][b] + distMap[b][c];
-                        distMap[(a*size) + c] = distMap[(a*size) + b] + distMap[(b*size) + c];
+    for(int k = 0; k < size; k++){
+        for(int i = 0; i < size; i++){
+            for(int j = 0; j < size; j++){
+                //if(distMap[i][k] != INFINITY && distMap[k][j] != INFINITY){
+                if(distMap[(i*size) + k] != INFINITY && distMap[(k*size) + j] != INFINITY){
+                    //if(distMap[i][j] > distMap[i][k] + distMap[k][j]){
+                    if(distMap[(i*size) + j] > distMap[(i*size) + k] + distMap[(k*size) + j]){; 
+                        //distMap[i][j] = distMap[i][k] + distMap[k][j];
+                        distMap[(i*size) + j] = distMap[(i*size) + k] + distMap[(k*size) + j];
                     }
                 }
             }
@@ -100,18 +100,18 @@ int main(){
 
 
     /*
-	int map[4][4] = {
+    int map[4][4] = {
         {0, 5, 0, 10}, 
-		{0, 0, 3, 0}, 
-		{0, 0, 0, 1}, 
-		{0, 0, 0, 0} 
-	};
-	int cMap[4][4] = {
+        {0, 0, 3, 0}, 
+        {0, 0, 0, 1}, 
+        {0, 0, 0, 0} 
+    };
+    int cMap[4][4] = {
         {1, 1, 0, 1}, 
-		{0, 1, 1, 0}, 
-		{0, 0, 1, 1}, 
-		{0, 0, 0, 1} 
-	};
+        {0, 1, 1, 0}, 
+        {0, 0, 1, 1}, 
+        {0, 0, 0, 1} 
+    };
     */
     
 
@@ -129,8 +129,9 @@ int main(){
         {1, 0, 0, 1}
     }; 
     */
-
+    
    
+    
     int map[9][9] = {
     {0, 4, 0, 0, 0, 0, 0, 8, 0}, 
     {4, 0, 8, 0, 0, 0, 0, 11, 0}, 
@@ -154,6 +155,8 @@ int main(){
     {0, 0, 1, 0, 0, 0, 1, 1, 0}};
     
     
+    
+
     //Run Floyd Warshall And Get Result
     int * resultMap = floydWarshall(&map[0][0], &cMap[0][0], 9);
     
