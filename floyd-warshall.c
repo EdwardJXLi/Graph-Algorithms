@@ -47,7 +47,6 @@ int * floydWarshall(int *map, int *cMap, int size){
             }
         }
     }
-    debugPrint(distMap, size);
     /*
      * This is the FUN part of the algorithm
      * It took me around AN HOUR to wrap my head around this, so I'll try the explain this as well as I can
@@ -75,20 +74,40 @@ int * floydWarshall(int *map, int *cMap, int size){
      * 
      * This is the best explination I have for this algorithm for now!
     */
+    //Loop through k, i, j
     for(int k = 0; k < size; k++){
         for(int i = 0; i < size; i++){
             for(int j = 0; j < size; j++){
-                //if(distMap[i][k] != INFINITY && distMap[k][j] != INFINITY){
-                if(distMap[(i*size) + k] != INFINITY && distMap[(k*size) + j] != INFINITY){
-                    //if(distMap[i][j] > distMap[i][k] + distMap[k][j]){
-                    if(distMap[(i*size) + j] > distMap[(i*size) + k] + distMap[(k*size) + j]){; 
-                        //distMap[i][j] = distMap[i][k] + distMap[k][j];
-                        distMap[(i*size) + j] = distMap[(i*size) + k] + distMap[(k*size) + j];
+                //Check if i->k and k->j is reachable (Not INFINITY)
+                if(distMap[(i*size) + k] != INFINITY && distMap[(k*size) + j] != INFINITY){ //if(distMap[i][k] != INFINITY && distMap[k][j] != INFINITY){
+                    //Checking if new connection is shorter than old connection
+                    if(distMap[(i*size) + j] > distMap[(i*size) + k] + distMap[(k*size) + j]){ //if(distMap[i][j] > distMap[i][k] + distMap[k][j]){
+                        //Set connection to new (and shorter) connection
+                        distMap[(i*size) + j] = distMap[(i*size) + k] + distMap[(k*size) + j]; //distMap[i][j] = distMap[i][k] + distMap[k][j];
                     }
                 }
             }
         }
-    }debugPrint(distMap, size);
+    }
+
+    //Check for nagative cycles
+    //Similar to first run through, but check if Alternate / Pivot Node Is A Negative Value
+    //(Negative Value Means It Has To Be Part Of A Negative Cycle)
+    //If so, set original connection value to -Infinity (Self Loop Flag)
+    for(int k = 0; k < size; k++){
+        for(int i = 0; i < size; i++){
+            for(int j = 0; j < size; j++){
+                //Check if i->k and k->j is reachable (Not INFINITY)
+                if(distMap[(i*size) + k] != INFINITY && distMap[(k*size) + j] != INFINITY){ //if(distMap[i][k] != INFINITY && distMap[k][j] != INFINITY){
+                    //Checking if Self Distance of Alternate / Pivot Node Is Negative 
+                    if(distMap[(k*size) + k] < 0){ //if(distMap[k][k] < 0){
+                        //Set connection to -Infinity (Flag for negative loop) 
+                        distMap[(i*size) + j] = NEG_INFINITY; //distMap[i][j] = NEG_INFINITY;
+                    }
+                }
+            }
+        }
+    }
 
     //Return distMap 2d array
     return distMap;
@@ -98,8 +117,10 @@ int * floydWarshall(int *map, int *cMap, int size){
 #ifdef _DEFMAIN //Check if main should be compiled
 int main(){
 
+    //Test Values
 
     /*
+    //Simple No-Frills Graph
     int map[4][4] = {
         {0, 5, 0, 10}, 
         {0, 0, 3, 0}, 
@@ -116,6 +137,7 @@ int main(){
     
 
     /*
+    //Map With All Negative Cycles
     int map[4][4] = {
         {0, 1, 0, 0}, 
         {0, 0, -1, 0}, 
@@ -129,9 +151,64 @@ int main(){
         {1, 0, 0, 1}
     }; 
     */
-    
+
+
+    /*
+    //Large Map All Negative Cycles
+    int map[8][8] = {
+        {0, 4, 4, 0, 0, 0, 0, 0},
+        {0, 0, 0, 0, 0, 0, 0, 0},
+        {0, 0, 0, 0, 4, -2, 0, 0},
+        {3, 0, 2, 0, 0, 0, 0, 0},
+        {0, 0, 0, 1, 0, 0, -2, 0},
+        {0, 3, 0, 0, -3, 0, 0, 0},
+        {0, 0, 0, 0, 0, 2, 0, 2},
+        {0, 0, 0, 0, -2, 0, 0, 0}
+    }; 
+    int cMap[8][8] = {
+        {0, 1, 1, 0, 0, 0, 0, 0},
+        {0, 0, 0, 0, 0, 0, 0, 0},
+        {0, 0, 0, 0, 1, 1, 0, 0},
+        {1, 0, 1, 0, 0, 0, 0, 0},
+        {0, 0, 0, 1, 0, 0, 1, 0},
+        {0, 1, 0, 0, 1, 0, 0, 0},
+        {0, 0, 0, 0, 0, 1, 0, 1},
+        {0, 0, 0, 0, -2, 0, 0, 0}
+    }; 
+    */
+
+
+    /*
+    //Large Map With SOME Negative Cycles (Same one in bellman ford algo)
+    int map[10][10] = {
+        {0, 5, 0, 0, 0, 0, 0, 0, 0, 0}, //0
+        {0, 0, 20, 0, 0, 30, 60, 0, 0, 0}, //1
+        {0, 0, 0, 10, 75, 0, 0, 0, 0, 0}, //2
+        {0, 0, -15, 0, 0, 0, 0, 0, 0, 0}, //3
+        {0, 0, 0, 0, 0, 0, 0, 0, 0, 100}, //4
+        {0, 0, 0, 0, 25, 0, 5, 0, 50, 0}, //5
+        {0, 0, 0, 0, 0, 0, 0, -50, 0, 0}, //6
+        {0, 0, 0, 0, 0, 0, 0, 0, -10, 0}, //7
+        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, //8
+        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, //9
+    };
+
+    int cMap[10][10] = {
+        {1, 1, 0, 0, 0, 0, 0, 0, 0, 0}, //0
+        {0, 1, 1, 0, 0, 1, 1, 0, 0, 0}, //1
+        {0, 0, 1, 1, 1, 0, 0, 0, 0, 0}, //2
+        {0, 0, 1, 1, 0, 0, 0, 0, 0, 0}, //3
+        {0, 0, 0, 0, 1, 0, 0, 0, 0, 1}, //4
+        {0, 0, 0, 0, 1, 1, 1, 0, 1, 0}, //5
+        {0, 0, 0, 0, 0, 0, 1, 1, 0, 0}, //6
+        {0, 0, 0, 0, 0, 0, 0, 1, 1, 0}, //7
+        {0, 0, 0, 0, 0, 0, 0, 0, 1, 0}, //8
+        {0, 0, 0, 0, 0, 0, 0, 0, 0, 1}, //9
+    };
+    */
    
     
+    //Large map
     int map[9][9] = {
     {0, 4, 0, 0, 0, 0, 0, 8, 0}, 
     {4, 0, 8, 0, 0, 0, 0, 11, 0}, 
@@ -153,8 +230,6 @@ int main(){
     {0, 0, 0, 0, 0, 1, 0, 1, 1}, 
     {1, 1, 0, 0, 0, 0, 1, 0, 1}, 
     {0, 0, 1, 0, 0, 0, 1, 1, 0}};
-    
-    
     
 
     //Run Floyd Warshall And Get Result
