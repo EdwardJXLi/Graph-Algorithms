@@ -92,7 +92,7 @@ int kruskals(int * map, int * cMap, int size){
 #ifdef _DEFMAIN //Check if main should be compiled
 int main(){
     /*
-    int map[KS_ALT_MAX_SIZE][KS_ALT_MAX_SIZE] = {
+    int map[9][9] = {
     {0, 4, 0, 0, 0, 0, 0, 8, 0}, 
     {4, 0, 8, 0, 0, 0, 0, 11, 0}, 
     {0, 8, 0, 7, 0, 4, 0, 0, 2}, 
@@ -103,7 +103,7 @@ int main(){
     {8, 11, 0, 0, 0, 0, 1, 0, 7}, 
     {0, 0, 2, 0, 0, 0, 6, 7, 0}};
 
-    int cMap[KS_ALT_MAX_SIZE][KS_ALT_MAX_SIZE] = {
+    int cMap[9][9] = {
     {0, 1, 0, 0, 0, 0, 0, 1, 0}, 
     {1, 0, 1, 0, 0, 0, 0, 1, 0}, 
     {0, 1, 0, 1, 0, 1, 0, 0, 1}, 
