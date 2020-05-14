@@ -50,7 +50,7 @@ int prim(int * map, int * cMap, int size, int start){
                     //The Node Is Not Part Of The Visited Nodes (Prevents Self Looping)
                     //Current Cost Is Lowest Cost
                     if(cMap[(from*size) + to] && visited[to] == false && map[(from*size) + to] < currentCost){
-                        currentCost = map[(from*size) + to];
+                        currentCost = map[(from*size) + to]; //Set new lowest cost
                         lowestFrom = from;
                         lowestTo = to;
                     }
@@ -99,7 +99,7 @@ int main(){
     {8, 11, 0, 0, 0, 0, 1, 0, 7}, 
     {0, 0, 2, 0, 0, 0, 6, 7, 0}};
 
-    int cMap[9][] = {
+    int cMap[9][9] = {
     {0, 1, 0, 0, 0, 0, 0, 1, 0}, 
     {1, 0, 1, 0, 0, 0, 0, 1, 0}, 
     {0, 1, 0, 1, 0, 1, 0, 0, 1}, 
