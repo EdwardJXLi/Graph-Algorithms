@@ -15,7 +15,7 @@ Some of these were homework for my [ALGO2](https://github.com/Team-ALGO2/ALGO2) 
     - Used to find shortest path from all nodes to all other nodes (All Pair Shortest Paths (APSP))
 
 - **Advanced Minimum Spanning Tree Algorithms**
-  - **Kruskal’s algorithm** (***TODO***)
+  - **Kruskal’s algorithm (Done!)**
     - Used to find minimun spanning tree (MST). It calculates shortest route that passes througth all nodes.
   - **Prim’s algorithm (Done!)**
     - Used to find minimun spanning tree (MST), similar to Kruskals. Major difference is Prim scans by nodes, while Kruskals scans by verticies.
