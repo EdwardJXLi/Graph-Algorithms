@@ -1,95 +1,94 @@
-//Kruskals Minimum Spanning Tree
+// Kruskals Minimum Spanning Tree
 
+// Import Libraries
 #include <stdio.h>
 #include <stdlib.h>
+
+// Define Constants
 #define INFINITY 2147483647
 #define NEG_INFINITY -2147483647
 #define true 1
 #define false 0
 
-//Decide on weather to compile main (Used as library or used in standalone)
+// Decide on weather to compile main (Used as library or used in standalone)
 // !!Comment out if used as library to prevent main redefinition!! 
 #define _DEFMAIN
 
-//Function to travel down parent tree and return parent
+
+// Function to travel down parent tree and return parent
 int getParent(int * parents, int node){
-    //Travel Down Parent Tree (Check if Parent is Self)
+    // Travel Down Parent Tree (Check if Parent is Self)
     while (parents[node] != node){
-        //Setting Current Node To Parents And Repeat Process
+        // Setting Current Node To Parents And Repeat Process
         node = parents[node];
     }
-    return node; //Return Parent
+    return node;  // Return Parent
 }
 
-//The meat of the the algorithm
-//Takes In:
-//map -> 2d matrix of distances between nodes
-//cMap -> 2d matrix of Connectivity Booleans
-//size -> Size of 2d matrixs (Number of nodes)
+
+// The meat of the the algorithm
+// Takes In:
+// map -> 2d matrix of distances between nodes
+// cMap -> 2d matrix of Connectivity Booleans
+// size -> Size of 2d matrix (Number of nodes)
 int kruskals(int * map, int * cMap, int size){
-    //Set Total Cost, Lowest From Node, Lowest To Node, and Current Vertex Cost 
+    // Set Total Cost, Lowest From Node, Lowest To Node, and Current Vertex Cost 
     int cost = 0;
     int lowestFrom, lowestTo, currentCost;
 
-    //Parent Array -> Denotes Parent Of Selected Node
+    // Parent Array -> Denotes Parent Of Selected Node
     int * parents = (int*)malloc(sizeof(int) * size);
-    //Set all parent nodes to itself
+    // Set all parent nodes to itself
     for(int i = 0; i < size; i++){parents[i] = i;}
 
-    //TODO: Make More Efficient
-    //Loop Through size-1 So All Nodes Gets Touched
+    // Loop Through size-1 So All Nodes Gets Touched
     for(int i = 0; i < size-1; i++){
-        //Set lowestFrom, lowestTo, and , and currentCost to default value
-        //lowestFrom and lowestTo to -1. (Set to -1 to check if value has been changed)
-        //CurrentCost to INFINITY (Used for checking if cost is lowest)
+        // Set lowestFrom, lowestTo, and currentCost to default value
+        // lowestFrom and lowestTo to -1. (Set to -1 to check if value has been changed)
+        // CurrentCost to INFINITY (Used for checking if cost is lowest)
         lowestFrom = -1;
         lowestTo = -1;
         currentCost = INFINITY;
-        //Loop Through All From And To Nodes
+        // Loop Through All From And To Nodes
         for(int from = 0; from < size; from++){
             for(int to = 0; to < size; to++){
-                //For navigating 2d arrays, using "(from*size) + to"
-                //AKA "(rows*size + column)"
-
+                // For navigating 2d arrays, using "(from*size) + to"
+                // AKA "(rows*size + column)"
                     
-                //Checking If:
-                //The Nodes Are Connected (using cMap)
-                //The Nodes Do Not Share The Same Parent (Prevents Self Looping)
-                //Current Cost Is Lowest Cost
+                // Checking If:
+                // The Nodes Are Connected (using cMap)
+                // The Nodes Do Not Share The Same Parent (Prevents Self Looping)
+                // Current Cost Is Lowest Cost
                 if(cMap[(from*size) + to] && getParent(parents, from) != getParent(parents, to) && map[(from*size) + to] < currentCost){
-                    currentCost = map[(from*size) + to]; //Set new lowest cost
+                    currentCost = map[(from*size) + to];  // Set new lowest cost
                     lowestFrom = from;
                     lowestTo = to;
                 }
             }
         }
 
-        //Checking If lowestFrom and lowestTo has been changed
+        // Checking If lowestFrom and lowestTo has been changed
         if(lowestFrom != -1 && lowestTo != -1){
-            //Has Been Changed, Adding CurrentCost to Cost
+            // Has Been Changed, Adding CurrentCost to Cost
             cost = cost + currentCost;
-            //Joining Parent Of "From" Node To Parent Of "To" Node
+            // Joining Parent Of "From" Node To Parent Of "To" Node
             parents[getParent(parents, lowestFrom)] = getParent(parents, lowestTo);
-            //Printing Debug Text
-            #ifdef DEBUG
-            printf("Vertex From %d to %d Cost %d (Now Cost %d)\n", lowestFrom, lowestTo, currentCost, cost);
-            #endif
         }
         else{
-            //Has Not Been Changed, Exiting Loop!
+            // Has Not Been Changed, Exiting Loop!
             break;
         }
     }
 
-    //Free Allocated Memory (Parent Array)
+    // Free Allocated Memory (Parent Array)
     free(parents);
 
-    //Return Cost
+    // Return Cost
     return cost;
 }
 
 
-#ifdef _DEFMAIN //Check if main should be compiled
+#ifdef _DEFMAIN  // Check if main should be compiled
 int main(){
     /*
     int map[9][9] = {
@@ -131,16 +130,12 @@ int main(){
         {0, 1, 1, 1, 0}
     };
 
-    //Run Kruskals And Get Result
+    // Run Kruskals And Get Result
     int cost = kruskals(&map[0][0], &cMap[0][0], 5);
 
-    //Print Final Cost
+    // Print Final Cost
     printf("%d\n", cost);
 
-    //Expected Output:
-    /*
-    16
-    */
-
+    // Expected Output: 16
 }
 #endif //_DEFMAIN

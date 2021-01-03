@@ -1,14 +1,14 @@
 # Graph Algorithms
 A collection of some graph algorithms I wrote during my free time  
-They all contain pretty in-deaph comments, so feel free to use as refrence  
+They all contain pretty in-depth comments, so feel free to use as reference  
 Some of these were homework for my [ALGO2](https://github.com/Team-ALGO2/ALGO2) Class  
 
 ## Algorithms:
-- **Advanced Pathfinding Algorithms**
+- **Pathfinding Algorithms**
   - **Dijkstra’s algorithm (Done!)**
-    - Used to find smallest path from one node to any other node with non-negative weigth on vertices. Some examples of its usage could be google maps to find shortest route.
+    - Used to find smallest path from one node to any other node with non-negative weights on vertices. Some examples of its usage could be google maps to find shortest route.
   - **Bellman-Ford’s algorithm (Done!)**
-    - Similar to Dikjtra, but it can handle negative weigths. In return, it detect nagative cycles.  
+    - Similar to Dijkstra, but it can handle negative weights. In return, it detect negative cycles.  
 
 - **All Pairs Shortest Path Algorithms**
   - **Floyd-Warshall’s algorithm (Done!)**
@@ -16,9 +16,9 @@ Some of these were homework for my [ALGO2](https://github.com/Team-ALGO2/ALGO2) 
 
 - **Advanced Minimum Spanning Tree Algorithms**
   - **Kruskal’s algorithm (Done!)**
-    - Used to find minimun spanning tree (MST). It calculates shortest route that passes througth all nodes.
+    - Used to find minimum spanning tree (MST). It calculates shortest route that passes through all nodes.
   - **Prim’s algorithm (Done!)**
-    - Used to find minimun spanning tree (MST), similar to Kruskals. Major difference is Prim scans by nodes, while Kruskals scans by verticies.
+    - Used to find minimum spanning tree (MST), similar to Kruskals. Major difference is Prim scans by nodes, while Kruskals scans by vertices.
   
 - **Maximum Flow Algorithms**
   - **Ford-Fulkerson algorithm** (***TODO***)
